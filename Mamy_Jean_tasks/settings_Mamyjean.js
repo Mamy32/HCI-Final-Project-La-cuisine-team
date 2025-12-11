@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentEmail = localStorage.getItem("currentUserEmail");
 
   if (!currentEmail || !users.length) {
-    window.location.href = "index.html";
+    window.location.href = "login_MamyJean.html";
     return;
   }
 
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     (u) => u.email && u.email.toLowerCase() === currentEmail.toLowerCase()
   );
   if (userIndex === -1) {
-    window.location.href = "index.html";
+    window.location.href = "login_MamyJean.html";
     return;
   }
 
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     logoutButton.addEventListener("click", () => {
       localStorage.removeItem("currentUserEmail");
       alert("You have been logged out.");
-      window.location.href = "index.html";
+      window.location.href = "login_MamyJean.html";
     });
   }
 
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     logoutAllButton.addEventListener("click", () => {
       localStorage.removeItem("currentUserEmail");
       alert("You have been logged out.");
-      window.location.href = "index.html";
+      window.location.href = "login_MamyJean.html";
     });
   }
 
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.removeItem("currentUserEmail");
 
       alert("Your account has been deleted.");
-      window.location.href = "index.html";
+      window.location.href = "login_MamyJean.html";
     });
   }
 
@@ -232,7 +232,7 @@ if (clearDataButton) {
 
         localStorage.clear();
         alert("All data has been cleared. Restarting app...");
-        window.location.href = "index.html";
+        window.location.href = "login_MamyJean.html";
     });
 }
 
