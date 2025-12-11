@@ -137,6 +137,7 @@ body {
 
 @media (max-width: 1200px) {
 		main {
+			display: flex;
 			flex-direction: column;
 		}
 
@@ -144,5 +145,68 @@ body {
 			max-width: 100%;
 			min-width: 300px;
 		}
+}
+
+/* ==========================
+   TABLET 1024px
+========================== */
+@media (max-width: 1024px) {
+    .main {
+			align-items: center;
+		display: flex;
+        padding-top: 160px;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .lftsec, .rightsec {
+        max-width: 100%;
+    }
+
+    .resimg {
+        height: 220px;
+    }
+}
+
+/* ==========================
+   MOBILE 600px
+========================== */
+@media (max-width: 600px) {
+
+    .main {
+        padding: 120px 12px 20px;
+        gap: 20px;
+    }
+
+    .lftsec, .rightsec {
+        padding: 15px;
+    }
+
+    .resimg {
+        height: 180px;
+    }
+
+    .resinfo h2 {
+        font-size: 24px;
+    }
+
+    .resinfo p {
+        font-size: 12px;
+    }
+
+    .formGrp label {
+        font-size: 12px;
+    }
+
+    .formGrp input,
+    .formGrp select,
+    .formGrp textarea {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .submitBtn {
+        font-size: 14px;
+    }
 }
 

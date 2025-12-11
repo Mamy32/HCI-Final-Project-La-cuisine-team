@@ -1,42 +1,57 @@
-﻿
+﻿// ================================
+// FOODLIST – FAVORITES HANDLING
+// ================================
 
-// using DOM manipulation
-const bookmarkBtn = document.getElementById('bookmarkBtn');
-const bookmarkIcon = document.getElementById('bookmarkIcon');
+const FAV_KEY = "favorites";
 
-// Track bookmark state
-let isBookmarked = false;
+// Load saved favorites from localStorage (array of IDs: ["food_1", "food_3", ...])
+let favorites = JSON.parse(localStorage.getItem(FAV_KEY)) || [];
 
+// Check if an item is already in favorites
+function isFavorite(id) {
+    return favorites.includes(id);
+}
 
-bookmarkBtn.addEventListener('click', function() {
-    isBookmarked = !isBookmarked;
-    
-    // using boolean to switch pucture
-    if (isBookmarked) {
-        bookmarkIcon.src = '../images/Bookmark fill.svg';
+// Save updated favorites back to localStorage
+function saveFavorites() {
+    localStorage.setItem(FAV_KEY, JSON.stringify(favorites));
+}
+
+// Select all heart buttons inside food cards
+const heartButtons = document.querySelectorAll(".heartbtn");
+
+heartButtons.forEach((btn) => {
+    // Get the parent card element
+    const card = btn.closest(".card");
+    if (!card) return;
+
+    // Retrieve the unique ID from the card (data-id="food_1")
+    const id = card.dataset.id;
+    if (!id) return;
+
+    const icon = btn.querySelector("img");
+    if (!icon) return;
+
+    // Set initial heart icon state based on stored favorites
+    if (isFavorite(id)) {
+        icon.src = "../images/tabler_heart.svg";  // filled heart
     } else {
-        bookmarkIcon.src = '../images/Bookmark.png';
+        icon.src = "../images/Heart.png";         // empty heart
     }
-});
 
-// applying variable
-const heartButtons = document.querySelectorAll('.heartbtn');
-
-// use DOM manipulation
-heartButtons.forEach(button => {
-    const heartIcon = button.querySelector('img');
-    let isFavorited = false;
-    
-    // usingmanipulation to witch image
-    button.addEventListener('click', function() {
-        isFavorited = !isFavorited;
-        
-        // use condition to change image
-        if (isFavorited) {
-            heartIcon.src = '../images/tabler_heart.svg';
+    // Toggle favorite on click
+    btn.addEventListener("click", () => {
+        if (isFavorite(id)) {
+            // Remove from favorites
+            favorites = favorites.filter(favId => favId !== id);
+            icon.src = "../images/Heart.png";
         } else {
-            heartIcon.src = '../images/Heart.png';
+            // Add to favorites
+            favorites.push(id);
+            icon.src = "../images/tabler_heart.svg";
         }
+
+        // Save the updated list
+        saveFavorites();
     });
 });
-

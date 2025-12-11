@@ -1,10 +1,11 @@
 // settings_Mamyjean.js
 document.addEventListener("DOMContentLoaded", () => {
-  // ====== Recover current user ======
+  // ====== RECOVER CURRENT USER FROM LOCALSTORAGE ======
   const users = JSON.parse(localStorage.getItem("users") || "[]");
   const currentEmail = localStorage.getItem("currentUserEmail");
 
   if (!currentEmail || !users.length) {
+    // No active session → redirect to login
     window.location.href = "login_MamyJean.html";
     return;
   }
@@ -13,13 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
     (u) => u.email && u.email.toLowerCase() === currentEmail.toLowerCase()
   );
   if (userIndex === -1) {
+    // Email not found in user list → force login again
     window.location.href = "login_MamyJean.html";
     return;
   }
 
   const user = users[userIndex];
 
-  // ====== ELEMENTS GENERAL / PROFILE ======
+  // ====== ELEMENT REFERENCES: GENERAL / PROFILE ======
   const fullNameInput = document.getElementById("profileFullName");
   const emailInput = document.getElementById("profileEmail");
   const nameHeading = document.getElementById("profileNameHeading");
@@ -27,13 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutButton = document.getElementById("logoutButton");
   const langButtons = document.querySelectorAll(".language-options button");
 
-  // pre-filled profil
+  // Pre-fill profile fields with current user data
   if (fullNameInput) fullNameInput.value = user.name || "";
   if (emailInput) emailInput.value = user.email || "";
   if (nameHeading) nameHeading.textContent = user.name || "User";
 
-  // Language
+  // ====== LANGUAGE HANDLING ======
   let currentLang = user.lang || "en";
+
+  // Initialize language buttons state
   langButtons.forEach((btn) => {
     const lang = btn.dataset.lang;
     const active = lang === currentLang;
@@ -41,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.classList.toggle("language", !active);
   });
 
+  // Update current language on button click
   langButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       currentLang = btn.dataset.lang;
@@ -52,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // save profil
+  // ====== SAVE PROFILE (GENERAL TAB) ======
   if (saveProfileButton) {
     saveProfileButton.addEventListener("click", (e) => {
       e.preventDefault();
@@ -65,11 +70,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // Basic email validation
       if (!/^\S+@\S+\.\S+$/.test(newEmail)) {
         alert("Please enter a valid email.");
         return;
       }
 
+      // Check if another account already uses this email
       const exists = users.find(
         (u, i) =>
           i !== userIndex &&
@@ -81,10 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // Apply changes to the current user
       users[userIndex].name = newName;
       users[userIndex].email = newEmail;
       users[userIndex].lang = currentLang;
 
+      // Persist changes
       localStorage.setItem("users", JSON.stringify(users));
       localStorage.setItem("currentUserEmail", newEmail);
 
@@ -93,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ====== LOGOUT (sidebar) ======
+  // ====== LOGOUT (SIDEBAR BUTTON) ======
   if (logoutButton) {
     logoutButton.addEventListener("click", () => {
       localStorage.removeItem("currentUserEmail");
@@ -102,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ====== SECURITY : CHANGE PASSWORD ======
+  // ====== SECURITY: CHANGE PASSWORD ======
   const securityForm = document.getElementById("securityForm");
   const currentPasswordInput = document.getElementById("currentPassword");
   const newPasswordInput = document.getElementById("newPassword");
@@ -141,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // Save new password
       users[userIndex].password = newPass;
       localStorage.setItem("users", JSON.stringify(users));
 
@@ -149,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Voir / cacher password (Security)
+  // ====== TOGGLE PASSWORD VISIBILITY (SECURITY) ======
   function setupTogglePassword(inputId, iconId) {
     const input = document.getElementById(inputId);
     const icon = document.getElementById(iconId);
@@ -166,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupTogglePassword("currentPassword", "toggleCurrentPassword");
   setupTogglePassword("newPassword", "toggleNewPassword");
 
-  // ====== LOGOUT GLOBAL (Security) ======
+  // ====== LOGOUT GLOBAL (SECURITY SECTION) ======
   const logoutAllButton = document.getElementById("logoutAllButton");
   if (logoutAllButton) {
     logoutAllButton.addEventListener("click", () => {
@@ -185,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       if (!sure) return;
 
+      // Remove user from the list
       users.splice(userIndex, 1);
       localStorage.setItem("users", JSON.stringify(users));
       localStorage.removeItem("currentUserEmail");
@@ -194,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ====== TABS : GENERAL / SECURITY / PRIVACY ======
+  // ====== TABS: GENERAL / SECURITY / PRIVACY ======
   const sidebarItems = document.querySelectorAll(".sidebar li[data-panel]");
   const panels = document.querySelectorAll(".content-panel");
 
@@ -210,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Sidebar click → switch panel
   sidebarItems.forEach((item) => {
     item.addEventListener("click", () => {
       const panelName = item.dataset.panel;
@@ -218,21 +230,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // panel by defaut
+  // Default active panel
   showPanel("general");
-
 });
 
-// ===== CLEAR ALL DATA (Privacy) =====
+// ===== CLEAR ALL DATA (PRIVACY SECTION) =====
 const clearDataButton = document.getElementById("clearDataButton");
 if (clearDataButton) {
-    clearDataButton.addEventListener("click", () => {
-        const sure = confirm("This will erase ALL user data. Continue?");
-        if (!sure) return;
+  clearDataButton.addEventListener("click", () => {
+    const sure = confirm("This will erase ALL user data. Continue?");
+    if (!sure) return;
 
-        localStorage.clear();
-        alert("All data has been cleared. Restarting app...");
-        window.location.href = "login_MamyJean.html";
-    });
+    localStorage.clear();
+    alert("All data has been cleared. Restarting app...");
+    window.location.href = "login_MamyJean.html";
+  });
 }
-

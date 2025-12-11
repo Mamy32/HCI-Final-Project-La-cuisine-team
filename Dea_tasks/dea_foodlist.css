@@ -1,8 +1,8 @@
 ﻿/* lbase layour */
 * {
-  margin: 0;
+    margin: 0;
     padding: 0;
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* Main layout */
@@ -15,7 +15,7 @@
     position: relative;
     border: 1px solid black;
     width: 100%;
-    
+
 }
 
 .headbg {
@@ -239,6 +239,7 @@
     display: flex;
     gap: 19px;
 }
+
 /* Filter btns */
 .resetbtn,
 .applybtn {
@@ -391,40 +392,10 @@
 
 
 @media (max-width: 1024px) {
-    body {
-        min-width: 100%;
-    }
-
-    .header nav {
-        padding: 0 40px;
-        height: 100px;
-    }
-
-    .logo img {
-        width: 90px;
-        height: 55px;
-    }
-
-    .logo h1 {
-        font-size: 28px;
-    }
-
-    .navbar {
-        gap: 24px;
-    }
-
-    .navbar a {
-        font-size: 24px;
-    }
-
-    .navbar a i {
-        font-size: 20px;
-    }
-
     .restheader {
-        margin-top: 100px;
         height: 350px;
     }
+
 
     .headl {
         width: 300px;
@@ -529,10 +500,6 @@
         padding: 16px;
     }
 
-    .card img {
-        height: 170px;
-    }
-
     .card h3 {
         font-size: 20px;
     }
@@ -555,36 +522,19 @@
         font-size: 11px;
     }
 }
+
 @media (max-width: 767px) {
-
-    .logo {
-        padding: 10px 0;
+    .heartbtn {
+        width: 20px;
+        height: 20px;
     }
 
-    .logo img {
-        width: 70px;
-        height: 42px;
-    }
-
-    .logo h1 {
-        font-size: 22px;
-    }
-
-    .navbar {
-        gap: 15px;
-        padding: 10px 0;
-    }
-
-    .navbar a {
-        font-size: 16px;
-    }
-
-    .navbar a i {
-        font-size: 16px;
+    .heartbtn img {
+        width: 100%;
+        height: 100%;
     }
 
     .restheader {
-        margin-top: 80px;
         height: auto;
         min-height: 500px;
     }
@@ -616,6 +566,7 @@
     .headt h1 {
         font-size: 36px;
     }
+
 
     .bookmarkbtn {
         width: 36px;
@@ -715,9 +666,6 @@
         padding: 16px;
     }
 
-    .card img {
-        height: 180px;
-    }
 
     .card h3 {
         font-size: 20px;
@@ -741,64 +689,4 @@
         font-size: 11px;
     }
 
-    footer {
-        height: auto;
-        padding-top: 20px;
-    }
-
-    .footcontent {
-        flex-direction: column;
-        gap: 24px;
-        padding: 0 16px 20px;
-        text-align: center;
-        display: flex;
-        align-items: center;
-    }
-
-    .footleft,
-    .footmiddle,
-    .footright {
-        width: 100%;
-    }
-
-    .footmiddle {
-        padding-top: 0;
-    }
-
-    .footright {
-        padding-top: 0;
-    }
-
-    .footleft h1 {
-        font-size: 26px;
-    }
-
-    .footleft p {
-        font-size: 18px;
-    }
-
-    .footmiddle a {
-        font-size: 18px;
-        text-align: center;
-    }
-
-    .followus {
-        font-size: 20px;
-    }
-
-    .socialicons {
-        justify-content: center;
-    }
-
-    .foothr {
-        margin-top: 10px;
-        bottom: 45px;
-    }
-
-    .copyright {
-        font-size: 12px;
-        padding-bottom: 12px;
-        bottom: 12px;
-    }
 }
-
