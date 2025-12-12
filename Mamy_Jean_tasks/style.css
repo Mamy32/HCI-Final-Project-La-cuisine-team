@@ -100,98 +100,92 @@ nav .navbar {
     padding-top: 30px;
 }
 
-.recommended-element .items .img {
-    background: #FFF;
+
+
+
+
+/* =========================
+   RECOMMENDED SECTION
+========================= */
+
+.recommended-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 320px);
+    justify-content: center;
+    gap: 24px;
+    margin-top: 30px;
+}
+
+.recommended-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
     display: flex;
-    width: 229px;
-    height: 203px;
-    border-radius: 8px;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.recommended-element {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 43px;
-    gap: 39px;
-
-}
-
-.recommended-element .items {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-
-}
-
-.recommended-element .items img {
-    width: 100%;
     height: 100%;
-    border-radius: 10px;
 }
 
-.recommended-element .items .content {
-    display: flex;
-    width: 229px;
-    margin-top: 10px;
-    flex-direction: column;
-    justify-content: center;
+.recommended-card:hover {
+    transform: translateY(-4px);
 }
 
-.recommended-element .items .content h2 {
-    color: #000;
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-}
-
-.recommended-element .items .content p {
-    color: #000;
-    font-family: Inter;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    margin: 10px 0;
-}
-
-.recommended-element .items .content .btn {
-    display: flex;
-    align-items: center;
+.recommended-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
     flex-shrink: 0;
-    gap: 10px;
-    margin: 10px 0;
 }
 
-.recommended-element .items .content .title {
+.recommended-content {
+    padding: 16px;
+    flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: space-between
+    flex-direction: column;
 }
 
-.recommended-element .items .content .star {
+.recommended-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.recommended-content .category {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.recommended-content .address {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 0;
+    flex: 1;
+}
+
+
+.recommended-card .btn {
+    padding: 16px;
     display: flex;
-    align-items: center;
+    gap: 12px;
+    margin-top: 0;
+    border-top: 1px solid #eee;
 }
 
-.recommended-element .items .content i {
-    font-size: 20px;
+.recommended-card .btn button {
+    background: #000;
+    color: #FFF;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    flex: 1;
+    min-width: 0;
+    text-align: center;
 }
 
-.recommended-element .items .content .btn a {
-    color: white;
-    background-color: black;
-    padding: 5px 8px;
-    border-radius: 3px;
-
+.recommended-card .btn button:hover {
+    background: #333;
 }
 
 .explore a {
@@ -209,10 +203,9 @@ nav .navbar {
     padding: 10px;
     border-radius: 8px;
     cursor: pointer;
-    max-width: 140px;
+    max-width: 160px;
     width: 100%;
     margin-right: 200px;
-
 }
 
 #about {
@@ -470,6 +463,10 @@ footer {
         margin-right: 40px;
     }
 
+    .recommended-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     /* ---------- ABOUT ---------- */
     #about {
         height: auto;
@@ -550,13 +547,14 @@ footer {
 }
 
 
-/* =========================
-    MOBILE (≈ 600px et moins)
-   ========================= */
+
 
 @media (max-width: 760px) {
 
-    /* --- HERO SECTION / NAV ELEMENT --- */
+    .recommended-grid {
+        grid-template-columns: 1fr;
+    }
+
     .nav-element {
         height: 60vh;
         padding: 0 16px;

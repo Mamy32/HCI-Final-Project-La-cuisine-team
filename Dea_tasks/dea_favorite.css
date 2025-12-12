@@ -1,18 +1,15 @@
-﻿
-
-* {
-  margin: 0;
-	padding: 0;
+﻿* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 /* main body*/
 body {
-	font-family: 'Poppins', Arial, sans-serif;
-  background-color: #121619;
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: #121619;
     color: white;
-    min-height: 1000px;
-	position: relative;
+    position: relative;
 }
 
 /* overlay */
@@ -26,7 +23,7 @@ body {
 
 /* the main content */
 .main {
-    
+
     margin: 0 auto;
     padding: 180px 80px 60px;
     position: relative;
@@ -53,7 +50,7 @@ body {
 /* fod card style */
 .cardimg {
     width: 200px;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
 }
 
@@ -192,4 +189,3 @@ body {
         font-size: 12px;
     }
 }
-
