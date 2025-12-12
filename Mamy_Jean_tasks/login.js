@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const findUser = (email) =>
     getUsers().find((u) => u.email.toLowerCase() === email.toLowerCase());
 
-
+  // If there are already users, start in login mode
   if (getUsers().length > 0) {
     isSignup = false;
   }
@@ -62,18 +62,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --------- Switch Sign up / Log in ---------
+  // --------- Switch between Sign up / Log in ---------
   function updateModeUI() {
     clearMessage();
 
     if (isSignup) {
-      // mode Sign up
+      // Sign up mode
       if (nameField) nameField.style.display = "block";
       if (forgotLink) forgotLink.style.display = "none";
       if (mainButton) mainButton.textContent = "Sign up";
       if (toggleLink) toggleLink.textContent = "Log in";
     } else {
-      // mode Log in
+      // Log in mode
       if (nameField) nameField.style.display = "none";
       if (forgotLink) forgotLink.style.display = "inline";
       if (mainButton) mainButton.textContent = "Log in";
@@ -88,10 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // état initial
+  // Initial state
   updateModeUI();
 
-  // --------- Forgot Password ---------
+  // --------- Forgot Password - MODIFIED ---------
   if (forgotButton) {
     forgotButton.addEventListener("click", (e) => {
       e.preventDefault();
@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let email =
         (emailInput && emailInput.value.trim().toLowerCase()) || "";
 
+      // If email is not filled in the form, ask for it
       if (!email) {
         email = prompt("Enter your email address:") || "";
         email = email.trim().toLowerCase();
@@ -112,12 +113,74 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      alert(
-        `Password hint: it starts with "${user.password.slice(
-          0,
-          2
-        )}" and has ${user.password.length} characters.`
-      );
+      // Create a custom popup to display the password
+      const popup = document.createElement("div");
+      popup.className = "password-popup";
+      
+      const popupContent = document.createElement("div");
+      popupContent.className = "popup-content";
+      
+      const title = document.createElement("h3");
+      title.textContent = "Password Recovery";
+      
+      const message = document.createElement("p");
+      // Display the full password
+      message.innerHTML = `<strong>Email:</strong> ${user.email}<br>
+                          <strong>Password:</strong> <span id="passwordDisplay">${user.password}</span>`;
+      
+      const closeBtn = document.createElement("button");
+      closeBtn.textContent = "Close";
+      closeBtn.className = "popup-close-btn";
+      closeBtn.onclick = () => document.body.removeChild(popup);
+      
+      popupContent.appendChild(title);
+      popupContent.appendChild(message);
+      popupContent.appendChild(closeBtn);
+      popup.appendChild(popupContent);
+      
+      // Styles for the popup
+      popup.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      `;
+      
+      popupContent.style.cssText = `
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      `;
+      
+      closeBtn.style.cssText = `
+        background: #000;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+        font-size: 16px;
+      `;
+      
+      document.body.appendChild(popup);
+      
+      // Close popup when clicking outside
+      popup.addEventListener("click", (event) => {
+        if (event.target === popup) {
+          document.body.removeChild(popup);
+        }
+      });
     });
   }
 
@@ -133,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const password =
         (passwordInput && passwordInput.value.trim()) || "";
 
+      // Validation
       if (!email || !password || (isSignup && !name)) {
         showError("All fields are required.");
         return;
@@ -149,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (isSignup) {
-        // ------- SIGN UP (only create an account) -------
+        // ------- SIGN UP (create new account) -------
         const users = getUsers();
         if (users.some((u) => u.email.toLowerCase() === email)) {
           showError("This email is already registered. Please log in.");
@@ -169,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
         isSignup = false;
         updateModeUI();
 
+        // Clear password field for security
         if (nameInput) nameInput.value = "";
         if (passwordInput) passwordInput.value = "";
       } else {
@@ -183,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
+        // Save current user session
         setCurrentUser(user.email);
         showSuccess("Login successful! Redirecting...");
         setTimeout(() => {
