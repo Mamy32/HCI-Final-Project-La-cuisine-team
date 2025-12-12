@@ -55,3 +55,49 @@ heartButtons.forEach((btn) => {
         saveFavorites();
     });
 });
+// Filter 
+const checkboxes = document.querySelectorAll('.filter input[type="checkbox"]');
+const foodCards = document.querySelectorAll('.grid .card');
+
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', filterFood);
+});
+
+// Filter function
+function filterFood() {
+    const checkedBoxes = [];
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            const labelText = checkbox.parentElement.textContent.trim();
+            checkedBoxes.push(labelText);
+        }
+    });
+    
+    // Show or hide cards
+    foodCards.forEach(card => {
+        const tags = card.querySelectorAll('.tags span');
+        let shouldShow = true;
+          //condision check
+        if (checkedBoxes.length === 0) {
+            shouldShow = true;
+        } else {
+            
+            shouldShow = false;
+            tags.forEach(tag => {
+                checkedBoxes.forEach(filter => {
+                    if (tag.textContent === filter) {
+                        shouldShow = true;
+                    }
+                });
+            });
+        }
+        
+        // display
+        if (shouldShow) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
